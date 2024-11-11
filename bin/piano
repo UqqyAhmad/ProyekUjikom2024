@@ -1,0 +1,37 @@
+/* <?php
+// Koneksi ke database
+$conn = new mysqli("localhost", "root", "", "cashier");
+
+// Periksa koneksi
+if ($conn->connect_error) {
+    die("Koneksi gagal: " . $conn->connect_error);
+}
+
+// Jika form disubmit
+if (isset($_POST['submit'])) {
+    $tanggal_penjualan = $_POST['tanggal_penjualan'];
+    $id_pelanggan = $_POST['id_pelanggan'];
+    $jumlah_barang = $_POST['jumlah_barang'];
+
+    // Query untuk menambahkan data ke tabel produk
+    $sql = "INSERT INTO penjualan (tanggal_penjualan, total_harga, id_pelanggan) VALUES (?, ?, ?)";
+
+    // Menggunakan prepared statement
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("sis", $tanggal_penjualan, $id_pelanggan, $jumlah_barang);
+
+    if ($stmt->execute()) {
+        // Redirect ke halaman data barang setelah data ditambahkan
+        header("Location: penjualan.php?message=added");
+        exit();
+    } else {
+        echo "Gagal menambahkan data: " . $conn->error;
+    }
+
+    // Tutup statement
+    $stmt->close();
+}
+
+// Tutup koneksi
+$conn->close();
+?> */

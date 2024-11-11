@@ -1,0 +1,33 @@
+ <label for="id_pelanggan">Pembeli:</label>
+            <select id="id_pelanggan" name="id_pelanggan" required>
+                <option value="">Pilih Pelanggan</option>
+                <?php
+                $conn = new mysqli("localhost", "root", "", "cashier");
+
+                if ($conn->connect_error) {
+                    die("Koneksi gagal: " . $conn->connect_error);
+                }
+
+                $sql = "SELECT id_pelanggan, nama_pelanggan FROM pelanggan";
+                $result = $conn->query($sql);
+                if ($result->num_rows > 0) {
+                    while ($row = $result->fetch_assoc()) {
+                        echo "<option value='" . $row['id_pelanggan'] . "'>" . $row['nama_pelanggan'] . "</option>";
+                    }
+                }
+                ?>
+            </select>
+
+            <label for="id_produk">Barang:</label>
+            <select id="id_produk" name="id_produk" required>
+                <option value="">Pilih Barang</option>
+                <?php
+                $sql = "SELECT id_produk, nama_produk, harga FROM produk";
+                $result = $conn->query($sql);
+                if ($result->num_rows > 0) {
+                    while ($row = $result->fetch_assoc()) {
+                        echo "<option value='" . $row['id_produk'] . "' data-harga='" . $row['harga'] . "'>" . $row['nama_produk'] . " (Rp " . number_format($row['harga'], 0, ',', '.') . ")</option>";
+                    }
+                }
+                ?>
+            </select>
